@@ -16,7 +16,7 @@ const router = require('./router.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-const dbURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/DomoMaker';
+const dbURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/DomoMakerD';
 mongoose.connect(dbURI, (err) => {
   if (err) {
     console.log('Could not connect to database');
@@ -35,7 +35,10 @@ redisClient.connect().catch(console.error);
 
 const app = express();
 
-app.use(helmet());
+app.use(helmet({
+  crossOriginEmbedderPolicy: false,
+  contentSecurityPolicy: false,
+}));
 app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
 app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
 app.use(compression());
