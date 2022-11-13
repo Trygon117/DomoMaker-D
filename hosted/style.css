@@ -209,8 +209,7 @@ nav:nth-child(1) {
 }
 
 #domos {
-    width: 40%;
-    min-width: 500px;
+    width: 500px;
     border: 2px solid #55acee;
     border-radius: 4px;
     margin: 0 auto;
