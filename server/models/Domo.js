@@ -5,6 +5,8 @@ let DomoModel = {};
 
 const setName = (name) => _.escape(name).trim();
 
+const setObsession = (obsession) => _.escape(obsession).trim();
+
 const DomoSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -16,6 +18,12 @@ const DomoSchema = new mongoose.Schema({
     type: Number,
     min: 0,
     require: true,
+  },
+  obsession: {
+    type: String,
+    required: true,
+    trim: true,
+    set: setObsession,
   },
   owner: {
     type: mongoose.Schema.ObjectId,
@@ -31,6 +39,7 @@ const DomoSchema = new mongoose.Schema({
 DomoSchema.statics.toAPI = (doc) => ({
   name: doc.name,
   age: doc.age,
+  obsession: doc.obsession,
 });
 
 DomoSchema.statics.findByOwner = (ownerId, callback) => {
@@ -39,7 +48,7 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
     owner: mongoose.Types.ObjectId(ownerId),
   };
 
-  return DomoModel.find(search).select('name age').lean().exec(callback);
+  return DomoModel.find(search).select('name age obsession').lean().exec(callback);
 };
 
 DomoModel = mongoose.model('Domo', DomoSchema);

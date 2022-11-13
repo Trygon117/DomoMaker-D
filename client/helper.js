@@ -31,6 +31,7 @@ const sendPost = async (url, data, handler) => {
     }
 
     if (handler) {
+        result.csrfToken = data._csrf;
         handler(result);
     }
 };
